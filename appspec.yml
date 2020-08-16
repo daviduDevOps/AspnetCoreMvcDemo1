@@ -5,7 +5,7 @@ files:
     destination: C:\NGM\DEMO\NewDemoSite1
 hooks:
   BeforeInstall:
-    - location: \Scripts\before-install.bat
+    - location: \Scripts\IisSetup.ps1
       timeout: 300
   AfterInstall:
     - location: \Scripts\after-install.bat
