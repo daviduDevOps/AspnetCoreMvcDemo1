@@ -1,4 +1,5 @@
 agentLabel = "Dev"
+String projectName = "AspnetCoreMvcDemo1"
 
 pipeline {	
     agent { label agentLabel }
@@ -11,11 +12,13 @@ pipeline {
 			}
 		}		
 		stage('Build Asp.net  core mvc application') {
-			bat """
-			cd ${projectName}
-			dotnet build -c Release /p:Version=${BUILD_NUMBER}
-			dotnet publish -c Release --no-build
-			"""
+			steps {
+				bat """
+				cd ${projectName}
+				dotnet build -c Release /p:Version=${BUILD_NUMBER}
+				dotnet publish -c Release --no-build
+				"""
+			}
 		}
 		stage('Blue Env: upload artifacts to S3') {	
 			steps {	
