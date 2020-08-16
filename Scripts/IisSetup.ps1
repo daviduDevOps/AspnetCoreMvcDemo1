@@ -11,6 +11,12 @@ Set-ExecutionPolicy Bypass -Scope Process
 # LIST All IIS FEATURES: 
 # Get-WindowsOptionalFeature -Online | where FeatureName -like 'IIS-*'
 
+Import-Module -Name ServerManager
+Install-WindowsFeature Web-Server
+
+Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP-PUBLIC" -RemoteAddress Any
+Enable-PSRemoting
+
 Enable-WindowsOptionalFeature -online -FeatureName NetFx4Extended-ASPNET45
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServer
