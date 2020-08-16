@@ -1,0 +1,18 @@
+version: 0.0
+os: windows
+files:
+  - source: AspNetCoreWebApplication/bin/release/netcoreapp3.1/
+    destination: /home/ec2-user/aspnetcoreapp
+  - source: AspNetCoreWebApplication/wwwroot/
+    destination: c:\NGM\DEMO\NewDemoSite1
+  - source: \Scripts\
+    destination: c:\NGM\DEMO\NewDemoSite1
+  - source: \index.html
+    destination: c:\NGM\DEMO\NewDemoSite1
+hooks:
+  BeforeInstall:
+    - location: \Scripts\before-install.bat
+      timeout: 300
+  AfterInstall:
+    - location: \Scripts\after-install.bat
+      timeout: 300
