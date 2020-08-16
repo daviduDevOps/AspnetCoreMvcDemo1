@@ -10,6 +10,13 @@ pipeline {
 			git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/SampleProjectPS.git'			
 			}
 		}		
+		stage('Build') {
+			bat """
+			cd ${projectName}
+			dotnet build -c Release /p:Version=${BUILD_NUMBER}
+			dotnet publish -c Release --no-build
+			"""
+		}
 		stage('Blue Env: upload artifacts to S3') {	
 			steps {	
 			echo 'upload artifacts to S3'			
