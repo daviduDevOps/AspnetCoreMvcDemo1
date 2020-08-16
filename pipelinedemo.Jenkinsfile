@@ -7,10 +7,10 @@ pipeline {
 	    stage('Blue Env: Download Artifacts from Artifactory') {	        
 			steps {	
 			echo 'Downloading Artifacts from Artifactory'	
-			git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/SampleProjectPS.git'			
+			git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
 			}
 		}		
-		stage('Build') {
+		stage('Build Asp.net  core mvc application') {
 			bat """
 			cd ${projectName}
 			dotnet build -c Release /p:Version=${BUILD_NUMBER}
