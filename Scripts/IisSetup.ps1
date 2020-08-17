@@ -11,12 +11,6 @@ Set-ExecutionPolicy Bypass -Scope Process
 # LIST All IIS FEATURES: 
 # Get-WindowsOptionalFeature -Online | where FeatureName -like 'IIS-*'
 
-Import-Module -Name ServerManager
-Install-WindowsFeature Web-Server
-
-Set-NetFirewallRule -Name "WINRM-HTTP-In-TCP-PUBLIC" -RemoteAddress Any
-Enable-PSRemoting
-
 Enable-WindowsOptionalFeature -online -FeatureName NetFx4Extended-ASPNET45
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServerRole
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebServer
@@ -98,9 +92,6 @@ net start w3svc
 # Disable Loopback Check on a Server - to get around no local Logins on Windows Server
 # New-ItemProperty HKLM:\System\CurrentControlSet\Control\Lsa -Name "DisableLoopbackCheck" -Value "1" -PropertyType dword
 
-#Jenkins that the target machine is trusted
-winrm set winrm/config/client '@{TrustedHosts="0.0.0.0"}'
-
 #List all the features available related to IIS
 Get-WindowsOptionalFeature -Online | where FeatureName -like 'IIS-*'
 
@@ -130,4 +121,3 @@ md "c:\NGM\DEMO\NewDemoSite2"
 # All on one line
 $site = $site = new-WebSite -name "NewDemoSite2" -PhysicalPath "c:\NGM\DEMO\NewDemoSite2" -ApplicationPool "NewDemoSite2AppPool" -force
 
-& .\Scripts\AddToHosts.ps1.bat
