@@ -26,6 +26,12 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpRedirect
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ApplicationDevelopment
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility45
+
+#Restart the IIS server
+net stop was /y
+
+net start w3svc 
+
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-HealthAndDiagnostics
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpLogging
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-LoggingLibraries
@@ -78,6 +84,10 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45
 # If you need classic ASP (not recommended)
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASP
 
+#Restart the IIS server
+net stop was /y
+
+net start w3svc 
 
 # The following optional components require 
 # Chocolatey OR Web Platform Installer to install
