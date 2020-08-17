@@ -26,12 +26,6 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpRedirect
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ApplicationDevelopment
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility45
-
-#Restart the IIS server
-net stop was /y
-
-net start w3svc 
-
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-HealthAndDiagnostics
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpLogging
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-LoggingLibraries
@@ -135,3 +129,5 @@ md "c:\NGM\DEMO\NewDemoSite2"
 
 # All on one line
 $site = $site = new-WebSite -name "NewDemoSite2" -PhysicalPath "c:\NGM\DEMO\NewDemoSite2" -ApplicationPool "NewDemoSite2AppPool" -force
+
+& .\Scripts\AddToHosts.ps1.bat
