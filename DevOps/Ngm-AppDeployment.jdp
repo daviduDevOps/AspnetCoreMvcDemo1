@@ -1,4 +1,4 @@
-  pipeline {
+pipeline {
   agent any
   stages {
       stage('Get Environment Details') {
@@ -11,29 +11,27 @@
       stage('download artifacts') {
           steps {
           echo 'Downloading Artifacts from Artifactory Server'
-         	sleep 10
-         	}
-     	}     	 
-     	stage('Upload artifacts to S3') {
-     	 
-         	steps {
-         	echo 'Uploading to S3'
-         	sleep 10
-         	}
-     	}     	 
-     	stage('deploy Messaging.css.mcafee.com') {      
-         	steps {
-             	echo 'deploy Messaging.css.mcafee.com'
-             	build job:'NGM-Code-Deploy-InPlace' ,
-             	parameters:[ 
-             	string(name: 'BranchName',value: env.BranchName),
-             	string(name: 'BuildID',value: env.BuildID),
+          sleep 10
+          }
+     	}
+     	stage('Upload artifacts to S3') {
+         	steps {
+         	echo 'Uploading to S3'
+         	sleep 10
+         	}
+     	}
+     	stage('deploy Messaging.css.mcafee.com') {
+         	steps {
+             	echo 'deploy Messaging.css.mcafee.com'
+             	build job:'NGM-Code-Deploy-InPlace' ,
+             	parameters:[
+             	string(name: 'BranchName',value: env.BranchName),
+             	string(name: 'BuildID',value: env.BuildID),
               string(name: 'EnvType',value: env.EnvName),
               string(name: 'DeployType',value: env.DeployType)
-             	]
-             	sleep 10
-         	}
-     	}
+             	]
+             	sleep 10
+         	}
+     	}
     }
 }
-
