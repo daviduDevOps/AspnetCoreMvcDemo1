@@ -88,7 +88,7 @@ pipeline {
          stage('deploy Ngmconsole.css.mcafee.com') {
          	steps {
              	echo 'deploy Ngmconsole.css.mcafee.com'
-             	build job:'Ngmconsole.css.mcafee.com' ,
+             	build job:'Ngmconsole.int.mcafee.com' ,
              	parameters:[
              	string(name: 'BranchName',value: env.BranchName),
              	string(name: 'BuildID',value: env.BuildID),
