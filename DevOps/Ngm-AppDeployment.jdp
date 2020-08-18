@@ -1,8 +1,6 @@
-  
-pipeline {	
- 	agent any	
- 	 	
- 	stages {	
+  pipeline {
+  agent any
+  stages {	
      	stage('Get Environment Details') {	
          	steps {	
          	echo 'Development Deployment'	
@@ -16,16 +14,14 @@ pipeline {
          	echo 'Downloading Artifacts from Artifactory Server'	
          	sleep 10	
          	}	
-     	}	
-     	 	
+     	}     	 	
      	stage('Upload artifacts to S3') {	
      	 	
          	steps {	
          	echo 'Uploading to S3'	
          	sleep 10	
          	}	
-     	}	
-     	 	
+     	}     	 	
      	stage('deploy Messaging.css.mcafee.com') {	
      	 	
          	steps {	
@@ -38,32 +34,7 @@ pipeline {
                 string(name: 'DeployType',value: env.DeployType)
              	]	
              	sleep 10	
-         	}	
+         	}
      	}
     }
-
-    def getCodedeployApplicationName(env, type, jsonFile){
-
-        def fileContent = readJSON file: "${jsonFile}"
-        Map jsonContent = (Map) new JsonSlurper().parseText(fileContent)
-        def envobj = jsonContent.get("${env}")
-        def deployType = jsonContent.get("${type}")
-        def appName = jsonContent.get("ApplicationName")
-
-        return appName
-
-    }
-
-    def getCodedeployGroupName(env, type, jsonFile){
-
-        def fileContent = readJSON file: "${jsonFile}"
-        Map jsonContent = (Map) new JsonSlurper().parseText(fileContent)
-        def envobj = jsonContent.get("${env}")
-        def deployType = jsonContent.get("${type}")
-        def groupName = jsonContent.get("DeploymentGroupName")
-
-        return groupName
-
-    }
-}	 
- 
+} 
