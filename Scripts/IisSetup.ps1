@@ -73,9 +73,9 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASP
 
 #Restart the IIS server
-net stop was /y
+#net stop was /y
 
-net start w3svc 
+#net start w3svc 
 
 # The following optional components require 
 # Chocolatey OR Web Platform Installer to install
