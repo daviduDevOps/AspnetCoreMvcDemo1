@@ -1,17 +1,16 @@
   pipeline {
- 	agent any
- 	stages {
-     	stage('Get Environment Details') {
-         	steps {
-         	echo 'Development Deployment'
-         	//build 'Dev'
-         	sleep 10
-         	}
-     	}
-     	stage('download artifacts') {
-     	 
-         	steps {
-         	echo 'Downloading Artifacts from Artifactory Server'
+  agent any
+  stages {
+      stage('Get Environment Details') {
+          steps {
+            echo 'Development Deployment'
+            //build 'Dev'
+            sleep 10
+          }
+      }
+      stage('download artifacts') {
+          steps {
+          echo 'Downloading Artifacts from Artifactory Server'
          	sleep 10
          	}
      	}     	 
@@ -22,16 +21,15 @@
          	sleep 10
          	}
      	}     	 
-     	stage('deploy Messaging.css.mcafee.com') {
-     	 
+     	stage('deploy Messaging.css.mcafee.com') {      
          	steps {
              	echo 'deploy Messaging.css.mcafee.com'
              	build job:'NGM-Code-Deploy-InPlace' ,
              	parameters:[ 
              	string(name: 'BranchName',value: env.BranchName),
              	string(name: 'BuildID',value: env.BuildID),
-                string(name: 'EnvType',value: env.EnvName),
-                string(name: 'DeployType',value: env.DeployType)
+              string(name: 'EnvType',value: env.EnvName),
+              string(name: 'DeployType',value: env.DeployType)
              	]
              	sleep 10
          	}
