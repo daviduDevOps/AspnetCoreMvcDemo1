@@ -1,3 +1,6 @@
+xcopy /d C:\NGM\DEMO\InstallPackage C:\NGM\DEMO\NewDemoSite2
+
+iisreset
 
 :: del "C:\windows\System32\drivers\etc\hosts" /s /f /q
 
