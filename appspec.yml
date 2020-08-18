@@ -2,7 +2,7 @@ version: 0.0
 os: windows
 files:
   - source: publish
-    destination: C:\NGM\DEMO\NewDemoSite2
+    destination: C:\NGM\DEMO\InstallPackage
 hooks:
   BeforeInstall:
     - location: \Scripts\before-install.bat
