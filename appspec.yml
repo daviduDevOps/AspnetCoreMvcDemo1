@@ -3,6 +3,7 @@ os: windows
 files:
   - source: publish
     destination: C:\NGM\DEMO\InstallPackage
+    overwrite: true
 hooks:
   BeforeInstall:
     - location: \Scripts\before-install.bat
