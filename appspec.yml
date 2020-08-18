@@ -1,8 +1,8 @@
 version: 0.0
 os: windows
 files:
-  - source: AspnetCoreMvcDemo1/publish
-    destination: C:\NGM\DEMO\NewDemoSite1
+  - source: publish
+    destination: C:\NGM\DEMO\NewDemoSite2
 hooks:
   BeforeInstall:
     - location: \Scripts\before-install.bat
