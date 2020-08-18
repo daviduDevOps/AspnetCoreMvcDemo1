@@ -23,7 +23,7 @@ pipeline {
      	stage('deploy Messaging.css.mcafee.com') {
          	steps {
              	echo 'deploy Messaging.css.mcafee.com'
-             	build job:'NGM-Code-Deploy-InPlace' ,
+             	build job:'Messaging.css.mcafee.com' ,
              	parameters:[
              	string(name: 'BranchName',value: env.BranchName),
              	string(name: 'BuildID',value: env.BuildID),
