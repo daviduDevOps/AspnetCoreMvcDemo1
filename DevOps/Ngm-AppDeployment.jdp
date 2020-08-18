@@ -1,0 +1,69 @@
+  
+pipeline {	
+ 	agent any	
+ 	 	
+ 	stages {	
+     	stage('Get Environment Details') {	
+         	steps {	
+         	echo 'Development Deployment'	
+         	//build 'Dev'	
+         	sleep 10	
+         	}	
+     	}	
+     	stage('download artifacts') {	
+     	 	
+         	steps {	
+         	echo 'Downloading Artifacts from Artifactory Server'	
+         	sleep 10	
+         	}	
+     	}	
+     	 	
+     	stage('Upload artifacts to S3') {	
+     	 	
+         	steps {	
+         	echo 'Uploading to S3'	
+         	sleep 10	
+         	}	
+     	}	
+     	 	
+     	stage('deploy Messaging.css.mcafee.com') {	
+     	 	
+         	steps {	
+             	echo 'deploy Messaging.css.mcafee.com'	
+             	build job:'NGM-Code-Deploy-InPlace' ,	
+             	parameters:[ 	
+             	string(name: 'BranchName',value: env.BranchName),	
+             	string(name: 'BuildID',value: env.BuildID),
+                string(name: 'EnvType',value: env.EnvName),	
+                string(name: 'DeployType',value: env.DeployType)
+             	]	
+             	sleep 10	
+         	}	
+     	}
+    }
+
+    def getCodedeployApplicationName(env, type, jsonFile){
+
+        def fileContent = readJSON file: "${jsonFile}"
+        Map jsonContent = (Map) new JsonSlurper().parseText(fileContent)
+        def envobj = jsonContent.get("${env}")
+        def deployType = jsonContent.get("${type}")
+        def appName = jsonContent.get("ApplicationName")
+
+        return appName
+
+    }
+
+    def getCodedeployGroupName(env, type, jsonFile){
+
+        def fileContent = readJSON file: "${jsonFile}"
+        Map jsonContent = (Map) new JsonSlurper().parseText(fileContent)
+        def envobj = jsonContent.get("${env}")
+        def deployType = jsonContent.get("${type}")
+        def groupName = jsonContent.get("DeploymentGroupName")
+
+        return groupName
+
+    }
+}	 
+ 

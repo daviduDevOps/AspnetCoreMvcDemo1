@@ -1,0 +1,96 @@
+{
+    "dev":{
+        "ApplicationName": "NGM-APPDeplyment",
+        "Deployment":{
+            "InPlace":{
+                "ApplicationName": "NGM-Development-InPlaceDeployment",
+                "DeploymentGroupName": "NGM-Development-InPlaceDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName": "",
+                "TargetGroupARN": "",
+                "AutoScalingGroupName": ""
+            },
+            "BlueGreen":{
+                "ApplicationName": "NGM-Development-BlueGreenDeployment",
+                "DeploymentGroupName": "NGM-Development-BlueGreenDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName-Blue": "",
+                "TargetGroupARN-Blue": "",
+                "TargetGroupName-Green": "",
+                "TargetGroupARN-Green": "",
+                "AutoScalingGroupName": ""
+            }
+        }
+    },
+    "qa":{
+        "ApplicationName": "NGM-APPDeplyment",
+        "Deployment":{
+            "InPlace":{
+                "ApplicationName": "NGM-Development-InPlaceDeployment",
+                "DeploymentGroupName": "NGM-Development-InPlaceDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName": "",
+                "TargetGroupARN": "",
+                "AutoScalingGroupName": ""
+            },
+            "BlueGreen":{
+                "ApplicationName": "NGM-Development-BlueGreenDeployment",
+                "DeploymentGroupName": "NGM-Development-BlueGreenDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName": "",
+                "TargetGroupName-Blue": "",
+                "TargetGroupARN-Blue": "",
+                "TargetGroupName-Green": "",
+                "TargetGroupARN-Green": "",
+                "AutoScalingGroupName": ""
+            }
+        }
+    },
+    "stage":{
+        "ApplicationName": "NGM-APPDeplyment",
+        "Deployment":{
+            "InPlace":{
+                "ApplicationName": "NGM-Development-InPlaceDeployment",
+                "DeploymentGroupName": "NGM-Development-InPlaceDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName": "",
+                "TargetGroupARN": "",
+                "AutoScalingGroupName": ""
+            },
+            "BlueGreen":{
+                "ApplicationName": "NGM-Development-BlueGreenDeployment",
+                "DeploymentGroupName": "NGM-Development-BlueGreenDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName": "",
+                "TargetGroupName-Blue": "",
+                "TargetGroupARN-Blue": "",
+                "TargetGroupName-Green": "",
+                "TargetGroupARN-Green": "",
+                "AutoScalingGroupName": ""
+            }
+        }
+    },
+    "prod":{
+        "ApplicationName": "NGM-APPDeplyment",
+        "Deployment":{
+            "InPlace":{
+                "ApplicationName": "NGM-Development-InPlaceDeployment",
+                "DeploymentGroupName": "NGM-Development-InPlaceDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName": "",
+                "TargetGroupARN": "",
+                "AutoScalingGroupName": ""
+            },
+            "BlueGreen":{
+                "ApplicationName": "NGM-Development-BlueGreenDeployment",
+                "DeploymentGroupName": "NGM-Development-BlueGreenDeploymentGroup",
+                "ARN":"",
+                "TargetGroupName-Blue": "",
+                "TargetGroupARN-Blue": "",
+                "TargetGroupName-Green": "",
+                "TargetGroupARN-Green": "",
+                "AutoScalingGroupName": ""
+            }
+        }
+    }
+}
