@@ -28,7 +28,7 @@ pipeline {
 		stage('Blue Env: Deployment') {			
 			steps {	
 				echo 'Code Deployment inprogress..'	
-				step([$class: 'AWSCodeDeployPublisher', applicationName: 'NgmDemoBlueGreenLB', awsAccessKey: 'AKIA2O67XNNTQOYA3EEH', awsSecretKey: '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', credentials: 'awsAccessKey', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'NgmDemoBlueGreenDeploymentGroup', deploymentMethod: 'deploy', excludes: '', iamRoleArn: '', includes: '**', pollingFreqSec: 15, pollingTimeoutSec: 3000, proxyHost: '', proxyPort: 0, region: 'us-east-1', s3bucket: 'bluegreencodedeploydemobucket', s3prefix: '', subdirectory: '', versionFileName: '', waitForCompletion: true])			
+				step([$class: 'AWSCodeDeployPublisher', applicationName: 'NgmDemoBlueGreenLB', awsAccessKey: 'AKIA2O67XNNTQOYA3EEH', awsSecretKey: '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', credentials: 'awsAccessKey', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'NgmDemoInPlaceDeploymentGroup', deploymentMethod: 'deploy', excludes: '', iamRoleArn: '', includes: '**', pollingFreqSec: 15, pollingTimeoutSec: 3000, proxyHost: '', proxyPort: 0, region: 'us-east-1', s3bucket: 'bluegreencodedeploydemobucket', s3prefix: '', subdirectory: '', versionFileName: '', waitForCompletion: true])			
 			}	
 		}
 		stage('Blue Env: Update Host file') {				
