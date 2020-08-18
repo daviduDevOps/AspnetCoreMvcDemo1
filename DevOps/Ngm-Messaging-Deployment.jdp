@@ -5,10 +5,12 @@ pipeline {
     agent { label agentLabel }
 	
 	stages {	
-	    stage('Blue Env: Download Artifacts from Artifactory') {	        
+	    stage('Blue Env: Download Artifacts from Artifactory') {	  
+	    	if(true){
 			steps {	
 			echo 'Downloading Artifacts from Artifactory'	
 			git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
+			}
 			}
 		}		
 		stage('Build Asp.net  core mvc application') {
