@@ -69,7 +69,7 @@ pipeline {
 		}
 		stage("Reroute Traffic from Blue to Green"){
 			steps{
-
+                echo 'eroute Traffic from Blue to Green'	
 			}
 		}	
 	}
