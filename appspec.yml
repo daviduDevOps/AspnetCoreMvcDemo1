@@ -6,6 +6,7 @@ files:
 hooks:
   BeforeInstall:
     - location: \Scripts\before-install.bat
+    - location: \Scripts\IisSetup.ps1
       timeout: 300
       runas: Administrator
   AfterInstall:
