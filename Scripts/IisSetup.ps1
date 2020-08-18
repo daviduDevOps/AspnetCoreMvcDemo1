@@ -5,7 +5,7 @@
 # * Make sure Powershell Execution Policy is bypassed to run these scripts:
 # * YOU MAY HAVE TO RUN THIS COMMAND PRIOR TO RUNNING THIS SCRIPT!
 Set-ExecutionPolicy Bypass -Scope Process
-
+echo "IIS Setup is Started..."
 # To list all Windows Features: dism /online /Get-Features
 # Get-WindowsOptionalFeature -Online 
 # LIST All IIS FEATURES: 
@@ -44,7 +44,6 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-IISCertificateMappingAuth
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ODBCLogging
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-StaticContent
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-DefaultDocument
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-DirectoryBrowsing
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebDAV
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-WebSockets
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ApplicationInit
@@ -60,17 +59,6 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-BasicAuthentication
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-HttpCompressionStatic
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementConsole
 Enable-WindowsOptionalFeature -Online -FeatureName IIS-ManagementService
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-WMICompatibility
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-LegacyScripts
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-LegacySnapIn
-#Enable-WindowsOptionalFeature -Online -FeatureName IIS-FTPServer
-#Enable-WindowsOptionalFeature -Online -FeatureName IIS-FTPSvc
-#Enable-WindowsOptionalFeature -Online -FeatureName IIS-FTPExtensibility
-
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASPNET45
-
-# If you need classic ASP (not recommended)
-Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASP
 
 #Restart the IIS server
 #net stop was /y
@@ -93,13 +81,15 @@ Enable-WindowsOptionalFeature -Online -FeatureName IIS-ASP
 # New-ItemProperty HKLM:\System\CurrentControlSet\Control\Lsa -Name "DisableLoopbackCheck" -Value "1" -PropertyType dword
 
 #List all the features available related to IIS
-Get-WindowsOptionalFeature -Online | where FeatureName -like 'IIS-*'
+#Get-WindowsOptionalFeature -Online | where FeatureName -like 'IIS-*'
 
 #Check for Installed Features:
-Get-WindowsOptionalFeature -Online | where {$_.state -eq "Disabled"} | ft -Property featurename
+#Get-WindowsOptionalFeature -Online | where {$_.state -eq "Disabled"} | ft -Property featurename
 
 #Disable DirectoryBrowsing Windows Feature
-Disable-WindowsOptionalFeature -Online -FeatureName IIS-DirectoryBrowsing
+#Disable-WindowsOptionalFeature -Online -FeatureName IIS-DirectoryBrowsing
+
+echo "IIS Setup is completed."
 
 #Create an IIS Application Pool and Web Site
 Import-Module WebAdministration
