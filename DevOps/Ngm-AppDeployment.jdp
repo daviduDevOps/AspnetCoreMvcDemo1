@@ -98,5 +98,17 @@ pipeline {
              	sleep 10
          	}
      	}
+      stage('deploy NGM DB') {
+         	steps {
+             	echo 'deploy Datascripts'
+             	build job:'Ngm.database.deployment' ,
+             	parameters:[
+             	string(name: 'BranchName',value: env.BranchName),
+             	string(name: 'BuildID',value: env.BuildID),
+              string(name: 'EnvType',value: env.EnvName)
+             	]
+             	sleep 10
+         	}
+     	}
     }
 }
