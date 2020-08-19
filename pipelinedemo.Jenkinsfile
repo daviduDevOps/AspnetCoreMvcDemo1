@@ -50,19 +50,6 @@ pipeline {
 				Invoke-Command -ComputerName $privateipaddress -FilePath C:\\temp\\HelloWorldApp\\Scripts\\AddToHosts.ps1  -credential $Cred'''	
 			}	
 		}
-		stage('Blue Env: Validate deployment') {		
-			input {		
-				message "Please approve to proceed ?"		
-				ok "Yes, we should."		
-				submitter "alice,bob"		
-				parameters {		string(name: 'APPROVER', defaultValue: 'Mr Sridhar', description: 'We are going to deploy build no: ?')		
-				}			
-			}		
-			steps {		
-				echo 'CI Release Environment'		
-				//build 'QA'		
-			}
-		}
 		stage('Green Env: Update Host file') {		    
 			steps {	
 				echo 'Green Env: Update Host file'		
@@ -113,6 +100,6 @@ pipeline {
 				sleep -Seconds (30)
 				#aws autoscaling detach-load-balancer-target-groups --auto-scaling-group-name $autoscalename --target-group-arns $bluetargetarn --region us-east-1'''	
 			}
-		}	
+		}
 	}
 }
