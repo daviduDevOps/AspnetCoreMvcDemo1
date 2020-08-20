@@ -1,5 +1,8 @@
 agentLabel = "Dev"
 String projectName = "AspnetCoreMvcDemo1"
+String cdPipelineRepo = "https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git"
+String s3BucketName = ""
+String awsRegion = "us-east-1" //  should be input parameters.
 
 pipeline {
     agent { label agentLabel }
@@ -7,7 +10,7 @@ pipeline {
 	    stage('Blue Env: Download Artifacts from Artifactory') {
 			steps {
 			    echo 'Downloading Artifacts from Artifactory'
-			    git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'
+			    git credentialsId: 'davidu-github-credentials', url: '${cdPipelineRepo}'
             }
 		}
 		stage('Build Asp.net  core mvc application') {
@@ -27,14 +30,15 @@ pipeline {
 		stage('Blue Env: Deployment') {
 			steps {
 				echo 'Code Deployment inprogress..'
-                
-				    
+				//getCodedeployApplicationName()
+
+
+				//CodeDeployement()
 			}
 		}
 		stage('Blue Env: Update Host file') {
 			steps {
 				echo 'Blue Env: Update Host file'
-				
 			}
 		}
 		stage('Blue Env: Validate deployment') {
@@ -42,7 +46,7 @@ pipeline {
 				message "Please approve to proceed ?"
 				ok "Yes, we should."
 				submitter "alice,bob"
-				parameters {		string(name: 'APPROVER', defaultValue: 'Mr Sridhar', description: 'We are going to deploy build no: ?')		
+				parameters {		string(name: 'APPROVER', defaultValue: 'Mr Sridhar', description: 'We are going to deploy build no: ?')
 				}
 			}
 			steps {
@@ -55,22 +59,66 @@ pipeline {
 				echo 'Green Env: Update Host file'
 			}
 		}
-		stage('Green Env: Validate deployment') {		
-			input {		
-				message "Please approve to Route traffic to Green ?"		
-				ok "Yes, we should."		
-				submitter "alice,bob"		
-				parameters {		string(name: 'APPROVER', defaultValue: 'Mr Sridhar', description: 'We are going to deploy build no: ?')		
-				}			
-			}		
-			steps {		
-				echo 'Green Env: Validate deployment'	
-			}
-		}
 		stage("Reroute Traffic from Blue to Green"){
 			steps{
-                echo 'eroute Traffic from Blue to Green'	
+                echo 'eroute Traffic from Blue to Green'
 			}
-		}	
+		}
+		stage('Blue Env: Terminate Blue Instances') {
+			steps {
+				echo 'Blue Env: Terminate Blue Instances'
+			}
+		}
+	}
+}
+
+def CodeDeployement(String applicationName, String deploymentConfig, String deploymentGroupName, String s3bucket, String versionFileName){
+	step([
+		$class: 'AWSCodeDeployPublisher', 
+		applicationName: '{$applicationName}', 
+		awsAccessKey: 'AKIA2O67XNNTQOYA3EEH', 
+		awsSecretKey: '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', 
+		credentials: 'awsAccessKey', 
+		deploymentConfig: '{$deploymentConfig}', 
+		deploymentGroupAppspec: false, 
+		deploymentGroupName: '{$deploymentGroupName}', 
+		deploymentMethod: 'deploy', 
+		excludes: '', iamRoleArn: '', includes: '**', pollingFreqSec: 15, pollingTimeoutSec: 3000, proxyHost: '', proxyPort: 0, 
+		region: 'us-east-1', 
+		s3bucket: '{$s3bucket}', 
+		s3prefix: '', 
+		subdirectory: '', 
+		versionFileName: '{$versionFileName}', 
+		waitForCompletion: true
+	])
+}
+
+def getCodedeployApplicationName(env, type, jsonFile){
+
+        def fileContent = readJSON file: "${jsonFile}"
+        Map jsonContent = (Map) new JsonSlurper().parseText(fileContent)
+        def envobj = jsonContent.get("${env}")
+        def deployType = jsonContent.get("${type}")
+        def appName = jsonContent.get("ApplicationName")
+		def groupName = jsonContent.get("DeploymentGroupName")
+
+        return appName
+}
+
+def getCodedeployGroupName(env, type, jsonFile){
+
+	def fileContent = readJSON file: "${jsonFile}"
+	Map jsonContent = (Map) new JsonSlurper().parseText(fileContent)
+	def envobj = jsonContent.get("${env}")
+	def deployType = jsonContent.get("${type}")
+	def groupName = jsonContent.get("DeploymentGroupName")
+
+	return groupName
+}
+
+def GetParamSecretsByEnvironment(String credentialsId){
+	// AWS credentialid will be different according to the env and aws accounts
+		withAWSParameterStore(credentialsId: '{$credentialsId}', naming: 'relative', path: '/service', recursive: true, regionName: '{$awsRegion}') {
+	// some block
 	}
 }

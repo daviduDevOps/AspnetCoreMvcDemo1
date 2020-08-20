@@ -1,6 +1,7 @@
 {
     "dev":{
         "ApplicationName": "NGM-APPDeplyment",
+        "topicArn": "",
         "Deployment":{
             "InPlace":{
                 "ApplicationName": "NGM-Development-InPlaceDeployment",
@@ -8,7 +9,8 @@
                 "ARN":"",
                 "TargetGroupName": "",
                 "TargetGroupARN": "",
-                "AutoScalingGroupName": ""
+                "AutoScalingGroupName": "",
+                "AutoScalingARN": ""
             },
             "BlueGreen":{
                 "ApplicationName": "NGM-Development-BlueGreenDeployment",
@@ -18,12 +20,16 @@
                 "TargetGroupARN-Blue": "",
                 "TargetGroupName-Green": "",
                 "TargetGroupARN-Green": "",
-                "AutoScalingGroupName": ""
+                "AutoScalingGroupName": "",
+                "AutoScalingARN": "",
+                "AutoScaleMin": "",
+                "AutoScaleMax": ""
             }
         }
     },
     "qa":{
         "ApplicationName": "NGM-APPDeplyment",
+        "topicArn": "",
         "Deployment":{
             "InPlace":{
                 "ApplicationName": "NGM-Development-InPlaceDeployment",
@@ -42,12 +48,16 @@
                 "TargetGroupARN-Blue": "",
                 "TargetGroupName-Green": "",
                 "TargetGroupARN-Green": "",
-                "AutoScalingGroupName": ""
+                "AutoScalingGroupName": "",
+                "AutoScalingARN": "",
+                "AutoScaleMin": "",
+                "AutoScaleMax": ""
             }
         }
     },
     "stage":{
         "ApplicationName": "NGM-APPDeplyment",
+        "topicArn": "",
         "Deployment":{
             "InPlace":{
                 "ApplicationName": "NGM-Development-InPlaceDeployment",
@@ -66,12 +76,16 @@
                 "TargetGroupARN-Blue": "",
                 "TargetGroupName-Green": "",
                 "TargetGroupARN-Green": "",
-                "AutoScalingGroupName": ""
+                "AutoScalingGroupName": "",
+                "AutoScalingARN": "",
+                "AutoScaleMin": "",
+                "AutoScaleMax": ""
             }
         }
     },
     "prod":{
         "ApplicationName": "NGM-APPDeplyment",
+        "topicArn": "",
         "Deployment":{
             "InPlace":{
                 "ApplicationName": "NGM-Development-InPlaceDeployment",
@@ -89,7 +103,10 @@
                 "TargetGroupARN-Blue": "",
                 "TargetGroupName-Green": "",
                 "TargetGroupARN-Green": "",
-                "AutoScalingGroupName": ""
+                "AutoScalingGroupName": "",
+                "AutoScalingARN": "",
+                "AutoScaleMin": "",
+                "AutoScaleMax": ""
             }
         }
     }

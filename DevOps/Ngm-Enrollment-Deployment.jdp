@@ -55,21 +55,14 @@ pipeline {
 				echo 'Green Env: Update Host file'
 			}
 		}
-		stage('Green Env: Validate deployment') {		
-			input {		
-				message "Please approve to Route traffic to Green ?"		
-				ok "Yes, we should."		
-				submitter "alice,bob"		
-				parameters {		string(name: 'APPROVER', defaultValue: 'Mr Sridhar', description: 'We are going to deploy build no: ?')		
-				}			
-			}		
-			steps {		
-				echo 'Green Env: Validate deployment'	
-			}
-		}
 		stage("Reroute Traffic from Blue to Green"){
 			steps{
                 echo 'eroute Traffic from Blue to Green'	
+			}
+		}
+		stage('Blue Env: Terminate Blue Instances') {
+			steps {
+				echo 'Blue Env: Terminate Blue Instances'
 			}
 		}	
 	}

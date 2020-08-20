@@ -6,10 +6,10 @@ files:
     overwrite: true
 hooks:
   BeforeInstall:
-    - location: \Scripts\before-install.bat
-    - location: \Scripts\IisSetup.ps1
+    - location: \DevOps\Scripts\before-install.bat
+    - location: \DevOps\Scripts\IisSetup.ps1
       timeout: 300
       runas: Administrator
   AfterInstall:
-    - location: \Scripts\after-install.bat
+    - location: \DevOps\Scripts\after-install.bat
       timeout: 300
