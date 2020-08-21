@@ -38,9 +38,9 @@ pipeline {
 				
 				echo "$data"
 				
-				echo data[0].Value
+				echo data[0]
 				
-				echo paramValues[0].Value
+				echo paramValues[0]
 
 				//UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
 				}
