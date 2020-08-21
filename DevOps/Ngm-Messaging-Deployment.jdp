@@ -28,7 +28,7 @@ pipeline {
 			steps {
 				echo 'upload artifacts to S3'
 				powershell label: '', script: '''$path = "/ngm/dev/db/"
-				$paramList = aws ssm get-parameters-by-path --path $path --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption
+				$paramList = aws ssm get-parameters-by-path --path $path --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1
 				$paramJsonArray = $paramList | ConvertFrom-Json
 				foreach($item in $paramJsonArray){
 					if($item.name -eq "/ngm/dev/db/servername"){
