@@ -28,30 +28,9 @@ pipeline {
 			steps {
 				echo 'upload artifacts to S3'
 				
-				
-   				powershell label: '', script: '''$path = "/ngm/dev/db/"
-				$paramList = aws ssm get-parameters-by-path --path $path --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1
-				$paramJsonArray = $paramList | ConvertFrom-Json
-				def serverName
-				def database
-				def userName
-				def password
-				foreach($item in $paramJsonArray){
-					if($item.name -eq "/ngm/dev/db/servername"){
-						serverName = $item.value;
-					}
-					if($item.name -eq "/ngm/dev/db/database"){
-						serverName = $item.value;
-					}
-					if($item.name -eq "/ngm/dev/db/username"){
-						serverName = $item.value;
-					}
-					if($item.name -eq "/ngm/dev/db/password"){
-						serverName = $item.value;
-					}
-					echo serverName"  "userName
-					echo $WORKSPACE
-				}'''
+				def paramValues = powershell label: 'GetParamStore', returnStdout: true, script: 'aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1'
+   				
+				echo "$paramValues"
 
 				UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
 			}			 
