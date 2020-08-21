@@ -101,7 +101,7 @@ pipeline {
       stage('deploy NGM DB') {
          	steps {
              	echo 'deploy Datascripts'
-             	#build job:'Ngm.database.deployment' ,
+             	//build job:'Ngm.database.deployment' ,
              	parameters:[
              	string(name: 'BranchName',value: env.BranchName),
              	string(name: 'BuildID',value: env.BuildID),
