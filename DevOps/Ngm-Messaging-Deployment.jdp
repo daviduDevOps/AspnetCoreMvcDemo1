@@ -44,6 +44,8 @@ pipeline {
 					if($item.name -eq "/ngm/dev/db/password"){
 						$password = $item.value;
 					}
+					echo $serverName"  "$userName
+					echo ${WORKSPACE}
 				}'''
 
 				//UpdateAppSettingsFromParamStore(${serverName}, ${database}, ${userName}, ${password})
@@ -54,7 +56,7 @@ pipeline {
 		stage('Blue Env: Deployment') {
 			steps {
 				echo 'Code Deployment inprogress..'
-				getCodedeployApplicationName()
+				//getCodedeployApplicationName()
 
 
 				//CodeDeployement()
