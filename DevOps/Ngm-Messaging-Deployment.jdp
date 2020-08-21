@@ -27,22 +27,26 @@ pipeline {
 		stage('Blue Env: upload artifacts to S3') {
 			steps {
 				echo 'upload artifacts to S3'
+				def serverName
+				def database
+				def userName
+				def password
 				//withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
    				powershell label: '', script: '''$path = "/ngm/dev/db/"
 				$paramList = aws ssm get-parameters-by-path --path $path --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1
 				$paramJsonArray = $paramList | ConvertFrom-Json
 				foreach($item in $paramJsonArray){
 					if($item.name -eq "/ngm/dev/db/servername"){
-						$serverName = $item.value;
+						"${serverName}" = $item.value;
 					}
 					if($item.name -eq "/ngm/dev/db/database"){
-						$database = $item.value;
+						"${database}" = $item.value;
 					}
 					if($item.name -eq "/ngm/dev/db/username"){
-						$userName = $item.value;
+						"${userName}" = $item.value;
 					}
 					if($item.name -eq "/ngm/dev/db/password"){
-						$password = $item.value;
+						"${password}" = $item.value;
 					}
 					echo $serverName"  "$userName
 					echo $WORKSPACE
