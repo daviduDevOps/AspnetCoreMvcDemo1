@@ -32,8 +32,10 @@ pipeline {
 				def paramValues = powershell label: 'GetParamStore', returnStdout: true, script: 'aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1'
    				
 				echo "$paramValues"
+				def serverName = paramValues[0].Value
+				echo "$serverName"
 
-				UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
+				//UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
 				}
 			}			 
 		}
