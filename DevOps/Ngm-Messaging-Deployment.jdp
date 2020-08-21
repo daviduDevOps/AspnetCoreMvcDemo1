@@ -36,9 +36,9 @@ pipeline {
 				
 				def data = readJSON text: paramValues;
 				
-				echo "data"
+				echo "$data"
 				
-				echo "data[0].Value"
+				echo data[0].Value
 				
 				echo paramValues[0].Value
 
