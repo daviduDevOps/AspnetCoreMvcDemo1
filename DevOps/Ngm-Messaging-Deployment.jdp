@@ -12,7 +12,7 @@ pipeline {
 	    stage('Blue Env: Download Artifacts from Artifactory') {
 			steps {
 			    echo 'Downloading Artifacts from Artifactory'
-			    git credentialsId: 'davidu-github-credentials', url: '${cdPipelineRepo}'
+			    git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'
             }
 		}
 		stage('Build Asp.net  core mvc application') {
