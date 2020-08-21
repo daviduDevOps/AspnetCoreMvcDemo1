@@ -36,7 +36,11 @@ pipeline {
 				
 				def data = readJSON text: paramValues;
 				
-				echo "data   $data[0].Value"
+				echo "data"
+				
+				echo "data[0].Value"
+				
+				echo paramValues[0].Value
 
 				//UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
 				}
