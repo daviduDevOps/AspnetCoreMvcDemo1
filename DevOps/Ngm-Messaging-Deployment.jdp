@@ -17,11 +17,12 @@ pipeline {
 		}
 		stage('Build Asp.net  core mvc application') {
 			steps {
-				bat """
-				cd ${projectName}
-				dotnet build -c Release /p:Version=${BUILD_NUMBER}
-				dotnet publish -c Release --no-build
-				"""
+			echo "build asp.net core"
+				//bat """
+				//cd ${projectName}
+				//dotnet build -c Release /p:Version=${BUILD_NUMBER}
+				//dotnet publish -c Release --no-build
+				//"""
 			}
 		}
 		stage('Blue Env: upload artifacts to S3') {
@@ -30,9 +31,11 @@ pipeline {
 				script{
 				
 				def paramValues = powershell label: 'GetParamStore', returnStdout: true, script: 'aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1'
-   				
-				echo "$paramValues"
-				def serverName = paramValues[0].Value
+   				echo "paramValues  $paramValues"
+				def paramArray = paramValues.toArray();
+				echo "paramArray  $paramArray"
+				
+				def serverName = paramArray[0]
 				echo "$serverName"
 
 				//UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
