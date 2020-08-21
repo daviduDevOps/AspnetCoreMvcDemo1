@@ -24,13 +24,16 @@ pipeline {
 		}
 		stage('Blue Env: upload artifacts to S3') {
 			steps {
-			echo 'upload artifacts to S3'
+				echo 'upload artifacts to S3'
+				GetParamSecretsByEnvironment()
+
+				UpdateAppSettingsFromParamStore(${serverName}, ${database}, ${userName}, ${password})
 			}
 		}
 		stage('Blue Env: Deployment') {
 			steps {
 				echo 'Code Deployment inprogress..'
-				//getCodedeployApplicationName()
+				getCodedeployApplicationName()
 
 
 				//CodeDeployement()
@@ -149,4 +152,3 @@ def UpdateAppSettingsFromParamStore(serverName, database, username, password) {
     cfg = appSettings
 }
 
-def
