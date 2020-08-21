@@ -5,10 +5,6 @@ String projectName = "AspnetCoreMvcDemo1"
 String cdPipelineRepo = "https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git"
 String s3BucketName = ""
 String awsRegion = "us-east-1" 
-def serverName=""
-def database=""
-def userName=""
-def password=""
 
 pipeline {
     agent { label agentLabel }
@@ -36,20 +32,24 @@ pipeline {
    				powershell label: '', script: '''$path = "/ngm/dev/db/"
 				$paramList = aws ssm get-parameters-by-path --path $path --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1
 				$paramJsonArray = $paramList | ConvertFrom-Json
+				def serverName
+				def database
+				def userName
+				def password
 				foreach($item in $paramJsonArray){
 					if($item.name -eq "/ngm/dev/db/servername"){
-						"${serverName}" = $item.value;
+						serverName = $item.value;
 					}
 					if($item.name -eq "/ngm/dev/db/database"){
-						"${database}" = $item.value;
+						serverName = $item.value;
 					}
 					if($item.name -eq "/ngm/dev/db/username"){
-						"${userName}" = $item.value;
+						serverName = $item.value;
 					}
 					if($item.name -eq "/ngm/dev/db/password"){
-						"${password}" = $item.value;
+						serverName = $item.value;
 					}
-					echo $serverName"  "$userName
+					echo serverName"  "userName
 					echo $WORKSPACE
 				}'''
 
