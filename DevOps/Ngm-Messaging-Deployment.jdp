@@ -32,11 +32,11 @@ pipeline {
 				
 				def paramValues = powershell label: 'GetParamStore', returnStdout: true, script: 'aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1'
    				echo "paramValues  $paramValues"
-				def paramArray = json.parse(paramValues)
+				//def paramArray = json.parse(paramValues)
 				echo "paramArray  $paramArray"
+				Map jsonContent = (Map) new JsonSlurper().parseText(paramValues)
 				
-				def serverName = paramArray[0]
-				echo "$serverName"
+				echo "$jsonContent"
 
 				//UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
 				}
