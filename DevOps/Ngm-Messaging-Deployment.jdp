@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 agentLabel = "Dev"
 String projectName = "AspnetCoreMvcDemo1"
 String cdPipelineRepo = "https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git"
