@@ -27,12 +27,14 @@ pipeline {
 		stage('Blue Env: upload artifacts to S3') {
 			steps {
 				echo 'upload artifacts to S3'
+				script{
 				
 				def paramValues = powershell label: 'GetParamStore', returnStdout: true, script: 'aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1'
    				
 				echo "$paramValues"
 
 				UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
+				}
 			}			 
 		}
 		stage('Blue Env: Deployment') {
