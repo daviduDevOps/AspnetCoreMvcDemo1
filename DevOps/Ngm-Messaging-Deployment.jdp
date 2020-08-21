@@ -5,10 +5,10 @@ String projectName = "AspnetCoreMvcDemo1"
 String cdPipelineRepo = "https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git"
 String s3BucketName = ""
 String awsRegion = "us-east-1" 
-String serverName=""
-String database=""
-String userName=""
-String password=""
+def serverName=""
+def database=""
+def userName=""
+def password=""
 
 pipeline {
     agent { label agentLabel }
@@ -32,7 +32,7 @@ pipeline {
 			steps {
 				echo 'upload artifacts to S3'
 				
-				//withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+				
    				powershell label: '', script: '''$path = "/ngm/dev/db/"
 				$paramList = aws ssm get-parameters-by-path --path $path --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1
 				$paramJsonArray = $paramList | ConvertFrom-Json
@@ -54,9 +54,7 @@ pipeline {
 				}'''
 
 				UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
-			}
-			 // some block
-			//}
+			}			 
 		}
 		stage('Blue Env: Deployment') {
 			steps {
