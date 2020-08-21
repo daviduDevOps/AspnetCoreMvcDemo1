@@ -1,16 +1,16 @@
 agentLabel = "Dev"
 String projectName = "AspnetCoreMvcDemo1"
 
-pipeline {	
+pipeline {
     agent { label agentLabel }
-	
-	stages {	
-	    stage('Blue Env: Download Artifacts from Artifactory') {	        
-			steps {	
-			echo 'Downloading Artifacts from Artifactory'	
+
+	stages {
+	    stage('Blue Env: Download Artifacts from Artifactory') {
+			steps {
+			echo 'Downloading Artifacts from Artifactory'
 			git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
 			}
-		}		
+		}
 		stage('Build Asp.net  core mvc application') {
 			steps {
 				bat """
@@ -20,20 +20,20 @@ pipeline {
 				"""
 			}
 		}
-		stage('Blue Env: upload artifacts to S3') {	
-			steps {	
-			echo 'upload artifacts to S3'			
+		stage('Blue Env: upload artifacts to S3') {
+			steps {
+			echo 'upload artifacts to S3'
 			}
 		}
-		stage('Blue Env: Deployment') {			
-			steps {	
-				echo 'Code Deployment inprogress..'	
+		stage('Blue Env: Deployment') {
+			steps {
+				echo 'Code Deployment inprogress..'
 				step([$class: 'AWSCodeDeployPublisher', applicationName: 'NgmDemoBlueGreenLB', awsAccessKey: 'AKIA2O67XNNTQOYA3EEH', awsSecretKey: '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', credentials: 'awsAccessKey', deploymentConfig: 'CodeDeployDefault.OneAtATime', deploymentGroupAppspec: false, deploymentGroupName: 'NgmDemoInPlaceDeploymentGroup', deploymentMethod: 'deploy', excludes: '', iamRoleArn: '', includes: '**', pollingFreqSec: 15, pollingTimeoutSec: 3000, proxyHost: '', proxyPort: 0, region: 'us-east-1', s3bucket: 'bluegreencodedeploydemobucket', s3prefix: '', subdirectory: '', versionFileName: '', waitForCompletion: true])			
-			}	
+			}
 		}
-		stage('Blue Env: Update Host file') {				
-			steps {	
-				echo 'Blue Env: Update Host file'		
+		stage('Blue Env: Update Host file') {
+			steps {
+				echo 'Blue Env: Update Host file'
 				powershell label: '', returnStdout: true, script: '''$Username = \'Administrator\'
 				$Password = \'ArSAgx67DeS-uOPkpo$9lyyo$-bBa=MX\'
 				$pass = ConvertTo-SecureString -AsPlainText $Password -Force
@@ -84,8 +84,7 @@ pipeline {
 		stage("Reroute Traffic from Blue to Green"){
 			steps{
 				powershell label: 'RerouteLoadTraffic', script: '''$instances = aws deploy  list-deployments --application-name NgmDemoBlueGreenLB --deployment-group-name NgmDemoBlueGreenDeploymentGroup --region us-east-1
-				$deployIdarray = $instances | ConvertFrom-Json
-				$deploymentId = $deployIdarray.deployments[0]
+				$dbParams=aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption
 				$instances = aws deploy list-deployment-instances --deployment-id  $deploymentId --region us-east-1
 				$instancesarray = $instances | ConvertFrom-Json
 				$instanceId = $instancesarray.instancesList[0]

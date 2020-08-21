@@ -1,5 +1,5 @@
 {
-    "dev":{
+    "dev":[{
         "ApplicationName": "NGM-APPDeplyment",
         "topicArn": "",
         "Deployment":{
@@ -26,8 +26,8 @@
                 "AutoScaleMax": ""
             }
         }
-    },
-    "qa":{
+    }],
+    "qa":[{
         "ApplicationName": "NGM-APPDeplyment",
         "topicArn": "",
         "Deployment":{
@@ -54,8 +54,8 @@
                 "AutoScaleMax": ""
             }
         }
-    },
-    "stage":{
+    }],
+    "stage":[{
         "ApplicationName": "NGM-APPDeplyment",
         "topicArn": "",
         "Deployment":{
@@ -82,7 +82,7 @@
                 "AutoScaleMax": ""
             }
         }
-    },
+    }],
     "prod":{
         "ApplicationName": "NGM-APPDeplyment",
         "topicArn": "",

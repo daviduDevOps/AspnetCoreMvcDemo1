@@ -116,9 +116,37 @@ def getCodedeployGroupName(env, type, jsonFile){
 	return groupName
 }
 
-def GetParamSecretsByEnvironment(String credentialsId){
-	// AWS credentialid will be different according to the env and aws accounts
-		withAWSParameterStore(credentialsId: '{$credentialsId}', naming: 'relative', path: '/service', recursive: true, regionName: '{$awsRegion}') {
-	// some block
-	}
+def GetParamSecretsByEnvironment(){
+	step([
+		powershell label: '', script: '''$paramList = aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption
+
+		$paramJsonArray = $paramList | ConvertFrom-Json
+
+		foreach($item in $paramJsonArray){
+			if($item.name -eq "/ngm/dev/db/servername"){
+				$serverName = $item.value;
+			}
+			if($item.name -eq "/ngm/dev/db/database"){
+				$database = $item.value;
+			}
+			if($item.name -eq "/ngm/dev/db/username"){
+				$userName = $item.value;
+			}
+			if($item.name -eq "/ngm/dev/db/password"){
+				$password = $item.value;
+			}
+		}
+
+		echo $serverName"  "$userName'''
+	])
 }
+
+def UpdateAppSettingsFromParamStore(serverName, database, username, password) {
+    def json = new JsonSlurper()
+    appSettings = json.parse(new File($"{WORKSPACE}/{projectName}/appsettings.json"))
+	def connectionStrings = "Server=${serverName}; Database=${database}; Trusted_Connection=True;Username=${username};pwd=${password}; MultipleActiveResultSets=true"
+    appSettings['ConnectionStrings'].DefaultConnection = connectionStrings
+    cfg = appSettings
+}
+
+def
