@@ -25,9 +25,25 @@ pipeline {
 		stage('Blue Env: upload artifacts to S3') {
 			steps {
 				echo 'upload artifacts to S3'
-				GetParamSecretsByEnvironment()
+				powershell label: '', script: '''$path = "/ngm/dev/db/"
+				$paramList = aws ssm get-parameters-by-path --path $path --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption
+				$paramJsonArray = $paramList | ConvertFrom-Json
+				foreach($item in $paramJsonArray){
+					if($item.name -eq "/ngm/dev/db/servername"){
+						$serverName = $item.value;
+					}
+					if($item.name -eq "/ngm/dev/db/database"){
+						$database = $item.value;
+					}
+					if($item.name -eq "/ngm/dev/db/username"){
+						$userName = $item.value;
+					}
+					if($item.name -eq "/ngm/dev/db/password"){
+						$password = $item.value;
+					}
+				}'''
 
-				UpdateAppSettingsFromParamStore(${serverName}, ${database}, ${userName}, ${password})
+				//UpdateAppSettingsFromParamStore(${serverName}, ${database}, ${userName}, ${password})
 			}
 		}
 		stage('Blue Env: Deployment') {
@@ -120,33 +136,13 @@ def getCodedeployGroupName(env, type, jsonFile){
 }
 
 def GetParamSecretsByEnvironment(){
-	step([
-		powershell label: '', script: '''$paramList = aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption
-
-		$paramJsonArray = $paramList | ConvertFrom-Json
-
-		foreach($item in $paramJsonArray){
-			if($item.name -eq "/ngm/dev/db/servername"){
-				$serverName = $item.value;
-			}
-			if($item.name -eq "/ngm/dev/db/database"){
-				$database = $item.value;
-			}
-			if($item.name -eq "/ngm/dev/db/username"){
-				$userName = $item.value;
-			}
-			if($item.name -eq "/ngm/dev/db/password"){
-				$password = $item.value;
-			}
-		}
-
-		echo $serverName"  "$userName'''
-	])
+	echo 'hellow'
 }
 
 def UpdateAppSettingsFromParamStore(serverName, database, username, password) {
     def json = new JsonSlurper()
-    appSettings = json.parse(new File($"{WORKSPACE}/{projectName}/appsettings.json"))
+	def filepath = "${WORKSPACE}/${projectName}/appsettings.json"
+    appSettings = json.parse(new File($filepath))
 	def connectionStrings = "Server=${serverName}; Database=${database}; Trusted_Connection=True;Username=${username};pwd=${password}; MultipleActiveResultSets=true"
     appSettings['ConnectionStrings'].DefaultConnection = connectionStrings
     cfg = appSettings
