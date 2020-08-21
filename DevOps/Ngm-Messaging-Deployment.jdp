@@ -32,7 +32,7 @@ pipeline {
 				
 				def paramValues = powershell label: 'GetParamStore', returnStdout: true, script: 'aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1'
    				echo "paramValues  $paramValues"
-				def paramArray = paramValues.toArray();
+				def paramArray = json.parse(paramValues)
 				echo "paramArray  $paramArray"
 				
 				def serverName = paramArray[0]
