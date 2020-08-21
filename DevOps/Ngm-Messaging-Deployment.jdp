@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 agentLabel = "Dev"
 String projectName = "AspnetCoreMvcDemo1"
@@ -33,9 +34,9 @@ pipeline {
 				def paramValues = powershell label: 'GetParamStore', returnStdout: true, script: 'aws ssm get-parameters-by-path --path /ngm/dev/db/ --query "Parameters[*].{Name:Name,Value:Value}"  --with-decryption --region us-east-1'
    				echo "paramValues  $paramValues"
 				
-				Map jsonContent = (Map) new JsonSlurper().parseText(paramValues)
+				def data = new JsonSlurperClassic().parseText(paramValues)
 				
-				echo "$jsonContent"
+				echo "${jsonContent[0].Value}"
 
 				//UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
 				}
