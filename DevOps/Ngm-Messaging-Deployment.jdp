@@ -45,10 +45,10 @@ pipeline {
 						$password = $item.value;
 					}
 					echo $serverName"  "$userName
-					echo ${WORKSPACE}
+					echo $WORKSPACE
 				}'''
 
-				//UpdateAppSettingsFromParamStore(${serverName}, ${database}, ${userName}, ${password})
+				UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
 			}
 			 // some block
 			//}
@@ -125,7 +125,7 @@ def GetParamSecretsByEnvironment(){
 
 def UpdateAppSettingsFromParamStore(serverName, database, username, password) {
     def json = new JsonSlurper()
-	def filepath = "${WORKSPACE}/${projectName}/appsettings.json"
+	def filepath = "$WORKSPACE/${projectName}/appsettings.json"
     appSettings = json.parse(new File($filepath))
 	def connectionStrings = "Server=${serverName}; Database=${database}; Trusted_Connection=True;Username=${username};pwd=${password}; MultipleActiveResultSets=true"
     appSettings['ConnectionStrings'].DefaultConnection = connectionStrings
