@@ -36,7 +36,7 @@ pipeline {
 				
 				def data = readJSON text: paramValues;
 				
-				echo "DATA :: $data"
+				echo "DATA :: ${data}"
 				
 				
 				//UpdateAppSettingsFromParamStore($serverName, $database, $userName, $password)
@@ -48,7 +48,7 @@ pipeline {
 				echo 'Code Deployment inprogress..'
 				//getCodedeployApplicationName()
 
-				echo "$paramValues"
+				echo "${paramValues}"
 				//CodeDeployement()
 			}
 		}
