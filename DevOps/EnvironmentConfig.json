@@ -102,14 +102,13 @@
                 "DeploymentGroupName2": "NGM-Development-BlueGreenDeploymentGroup2","AutoScalingGroupName": "NGM-Development-AutoScaling-Security-Group-2"}]
                 ,
                 "ARN":"",
-                "TargetGroupName-Blue": "App-Demo-TG-Blue",
-                "TargetGroupARN-Blue": "",
-                "TargetGroupName-Green": "App-Demo-TG-Green",
-                "TargetGroupARN-Green": "",
-                "AutoScalingGroupName": "NGM-Development-AutoScaling-Security-Group-1",
+                "TargetGroupName-Blue": "NGM-Development-Blue-TG",
+                "TargetGroupARN-Blue": "arn:aws:elasticloadbalancing:us-east-2:955470930558:targetgroup/NGM-Development-Blue-TG/519a0754e90f44ac",
+                "TargetGroupName-Green": "NGM-Development-Green-TG",
+                "TargetGroupARN-Green": "arn:aws:elasticloadbalancing:us-east-2:955470930558:targetgroup/NGM-Development-Green-TG/812b5c3885dd44b8",
                 "AutoScalingARN": "",
-                "AutoScaleMin": "",
-                "AutoScaleMax": ""
+                "AutoScaleMin": "1",
+                "AutoScaleMax": "3"
             }
         }
     }
