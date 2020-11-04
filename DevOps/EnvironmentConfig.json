@@ -96,14 +96,17 @@
                 "AutoScalingGroupName": ""
             },
             "BlueGreen":{
-                "ApplicationName": "NGM-Development-BlueGreenDeployment",
-                "DeploymentGroupName": "NGM-Development-BlueGreenDeploymentGroup",
+                "CodeDeployment":[{"ApplicationName1": "NGM-Development-BlueGreenDeployment1",
+                "DeploymentGroupName1": "NGM-Development-BlueGreenDeploymentGroup1","AutoScalingGroupName": "NGM-Development-AutoScaling-Security-Group-1"},
+                                 {"ApplicationName2": "NGM-Development-BlueGreenDeployment2",
+                "DeploymentGroupName2": "NGM-Development-BlueGreenDeploymentGroup2","AutoScalingGroupName": "NGM-Development-AutoScaling-Security-Group-2"}]
+                ,
                 "ARN":"",
-                "TargetGroupName-Blue": "",
+                "TargetGroupName-Blue": "App-Demo-TG-Blue",
                 "TargetGroupARN-Blue": "",
-                "TargetGroupName-Green": "",
+                "TargetGroupName-Green": "App-Demo-TG-Green",
                 "TargetGroupARN-Green": "",
-                "AutoScalingGroupName": "",
+                "AutoScalingGroupName": "NGM-Development-AutoScaling-Security-Group-1",
                 "AutoScalingARN": "",
                 "AutoScaleMin": "",
                 "AutoScaleMax": ""
