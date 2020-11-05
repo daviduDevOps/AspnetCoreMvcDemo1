@@ -1,0 +1,56 @@
+agentLabel = "Dev"
+String projectName = "AspnetCoreMvcDemo1"
+
+pipeline {
+    agent { label agentLabel }
+
+	stages {
+	    stage('Blue Env: Download Artifacts from Artifactory') {
+			steps {
+			echo 'Downloading Artifacts from Artifactory'
+			git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
+			}
+		}
+
+        stage('Blue to Green Deployment') {
+			steps {
+			    echo 'Downloading Artifacts from Artifactory'
+                script{
+
+                    def deployApplicationName = "NGM-Development-BlueGreenDeployment1"
+                    def deploymentGroupName1 = "NGM-Development-BlueGreenDeploymentGroup1"
+                    def deploymentGroupName2 = "NGM-Development-BlueGreenDeploymentGroup2"
+
+                    def deploymentGroupName = ""
+                    def deploymentType = ""
+
+                    def validateCodeDeployGroup = powershell label: '', returnStdout: true, script: """
+                        \$deploymentGroupDetails = aws deploy get-deployment-group --application-name $deployApplicationName --deployment-group-name NGM-Development-BlueGreenDeploymentGroup1 | ConvertFrom-Json
+                        $deploymentType = \$deploymentGroupDetails.deploymentGroupInfo.ec2TagFilters.Value
+                    """ 
+
+                    deploymentGroupName = deploymentType.equals('BLUE') ? deploymentGroupName = deploymentGroupName1 : deploymentGroupName2
+                    
+                    step([
+                        $class: 'AWSCodeDeployPublisher', 
+                        applicationName: deployApplicationName, 
+                        awsAccessKey: 'AKIA2O67XNNTQOYA3EEH', 
+                        awsSecretKey: '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', 
+                        credentials: 'awsAccessKey', 
+                        deploymentConfig: 'CodeDeployDefault.AllAtOnce', 
+                        deploymentGroupAppspec: false, 
+                        deploymentGroupName: deploymentGroupName, 
+                        deploymentMethod: 'deploy', 
+                        excludes: '', iamRoleArn: '', includes: '**', pollingFreqSec: 15, pollingTimeoutSec: 3000, proxyHost: '', proxyPort: 0, 
+                        region: 'us-west-2', 
+                        s3bucket: 'ngm-app-demo', 
+                        s3prefix: '', 
+                        subdirectory: '', 
+                        versionFileName: '', 
+                        waitForCompletion: true
+                    ])    
+                }
+            }
+        }
+    }
+}
