@@ -1,4 +1,4 @@
-agentLabel = "Dev"
+agentLabel = "WINDOWS-AGENT"
 String projectName = "AspnetCoreMvcDemo1"
 
 pipeline {
@@ -8,7 +8,7 @@ pipeline {
 	    stage('Blue Env: Download Artifacts from Artifactory') {
 			steps {
 			echo 'Downloading Artifacts from Artifactory'
-			git credentialsId: 'davidu-github-credentials', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
+			git credentialsId: 'GITHUB-SSH', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
 			}
 		}
 
