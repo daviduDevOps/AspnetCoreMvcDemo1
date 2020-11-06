@@ -34,8 +34,8 @@ pipeline {
                     step([
                         $class: 'AWSCodeDeployPublisher', 
                         applicationName: deployApplicationName, 
-                        awsAccessKey: 'AKIA2O67XNNTQOYA3EEH', 
-                        awsSecretKey: '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', 
+                        awsAccessKey: 'AKIA545UBMJ7KEKRQYZD', 
+                        awsSecretKey: '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', 
                         credentials: 'awsAccessKey', 
                         deploymentConfig: 'CodeDeployDefault.AllAtOnce', 
                         deploymentGroupAppspec: false, 
