@@ -33,10 +33,7 @@ pipeline {
                     echo "deploymentGroupName  "+deploymentGroupName
                     step([
                         $class: 'AWSCodeDeployPublisher', 
-                        applicationName: deployApplicationName, 
-                        awsAccessKey: 'AKIA545UBMJ7KEKRQYZD', 
-                        awsSecretKey: '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', 
-                        credentials: 'awsAccessKey', 
+                        applicationName: deployApplicationName,
                         deploymentConfig: 'CodeDeployDefault.AllAtOnce', 
                         deploymentGroupAppspec: false, 
                         deploymentGroupName: deploymentGroupName, 
