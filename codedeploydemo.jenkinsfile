@@ -24,13 +24,13 @@ pipeline {
                     def deploymentGroupName = ""
                     def deploymentType = ""
 
-                    def validateCodeDeployGroup = powershell label: '', returnStdout: true, script: """
+                    deploymentType = powershell label: '', returnStdout: true, script: """
                         \$deploymentGroupDetails = aws deploy get-deployment-group --application-name $deployApplicationName --deployment-group-name NGM-Development-BlueGreenDeploymentGroup1 | ConvertFrom-Json
-                        $deploymentType = \$deploymentGroupDetails.deploymentGroupInfo.ec2TagFilters.Value
+                        \$deploymentGroupDetails.deploymentGroupInfo.ec2TagFilters.Value
                     """ 
-
+                    echo "deploymentType  "+deploymentType
                     deploymentGroupName = deploymentType.equals('BLUE') ? deploymentGroupName = deploymentGroupName1 : deploymentGroupName2
-                    
+                    echo "deploymentGroupName  "+deploymentGroupName
                     step([
                         $class: 'AWSCodeDeployPublisher', 
                         applicationName: deployApplicationName, 
@@ -42,7 +42,7 @@ pipeline {
                         deploymentGroupName: deploymentGroupName, 
                         deploymentMethod: 'deploy', 
                         excludes: '', iamRoleArn: '', includes: '**', pollingFreqSec: 15, pollingTimeoutSec: 3000, proxyHost: '', proxyPort: 0, 
-                        region: 'us-west-2', 
+                        region: 'us-east-2', 
                         s3bucket: 'ngm-app-demo', 
                         s3prefix: '', 
                         subdirectory: '', 
