@@ -5,12 +5,12 @@ pipeline {
     agent { label agentLabel }
 
 	stages {
-	    stage('Blue Env: Download Artifacts from Artifactory') {
-			steps {
-			echo 'Downloading Artifacts from Artifactory'
-			git credentialsId: 'GITHUB-SSH', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
-			}
-		}
+	    // stage('Blue Env: Download Artifacts from Artifactory') {
+		// 	steps {
+		// 	echo 'Downloading Artifacts from Artifactory'
+		// 	git credentialsId: 'GITHUB-SSH', url: 'https://github.com/daviduDevOps/AspnetCoreMvcDemo1.git'			
+		// 	}
+		// }
 
         stage('Blue to Green Deployment') {
 			steps {
